@@ -1,4 +1,4 @@
-# vas_flutter
+# EcoTrack
 
 A new Flutter project.
 
