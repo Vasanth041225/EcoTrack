@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1390476448",
+    "project_id": "vasflutter",
+    "storage_bucket": "vasflutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1390476448:android:cf45a50fac591ec62a5dc5",
+        "android_client_info": {
+          "package_name": "com.example.vas_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdKM0zFVbetMmHTf9qSv4A6m_Lud1ldCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
