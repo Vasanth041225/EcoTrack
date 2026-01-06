@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -91,6 +91,23 @@ Future<void> _pickDate() async {
     });
   }
 
+      Future<String?> _uploadImage(File image) async {
+        try {
+          final user = FirebaseAuth.instance.currentUser!;
+          final fileName =
+              "reports/${user.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg";
+
+          final ref = FirebaseStorage.instance.ref().child(fileName);
+
+          await ref.putFile(image);
+
+          return await ref.getDownloadURL();
+        } catch (e) {
+          debugPrint("Image upload error: $e");
+          return null;
+        }
+      }
+
   // ================= SUBMIT =================
   Future<void> _submitReport() async {
     if (!_formKey.currentState!.validate()) return;
@@ -114,7 +131,8 @@ Future<void> _pickDate() async {
           .doc(user.uid)
           .get();
 
-      final String? imgUrl = null;
+      final String? imgUrl = await _uploadImage(_image!);
+
 
       await FirebaseFirestore.instance.collection("reports").add({
         "citizenId": user.uid,

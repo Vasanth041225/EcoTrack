@@ -51,6 +51,26 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
     }
   }
 
+void _openFullImage(BuildContext context, String imageUrl) {
+  showDialog(
+    context: context,
+    builder: (_) => Dialog(
+      backgroundColor: Colors.black,
+      insetPadding: const EdgeInsets.all(12),
+      child: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: InteractiveViewer(
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -235,6 +255,54 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                                 ),
                               ],
                             ),
+
+                            // ===== ORIGINAL REPORT IMAGE =====
+                              if (data['imageUrl'] != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: GestureDetector(
+                                    onTap: () => _openFullImage(context, data['imageUrl']),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.network(
+                                        data['imageUrl'],
+                                        height: 140,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                // ===== COMPLETION IMAGE =====
+                                if (data['completionImageUrl'] != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "Completion Proof",
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        GestureDetector(
+                                          onTap: () =>
+                                              _openFullImage(context, data['completionImageUrl']),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(12),
+                                            child: Image.network(
+                                              data['completionImageUrl'],
+                                              height: 160,
+                                              width: double.infinity,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
 
                             const SizedBox(height: 10),
 

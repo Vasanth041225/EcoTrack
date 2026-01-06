@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,22 +28,38 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   }
 
   Future<void> _completeTask() async {
-    if (completionC.text.isEmpty || completionImage == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Photo and description required")),
-      );
-      return;
-    }
+  if (completionC.text.isEmpty || completionImage == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Photo and description required")),
+    );
+    return;
+  }
 
-    setState(() => submitting = true);
+  setState(() => submitting = true);
 
+  try {
+    // 1️⃣ Upload image to Firebase Storage
+    final fileName =
+        "completion_${widget.reportId}_${DateTime.now().millisecondsSinceEpoch}.jpg";
+
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child("completion_images")
+        .child(fileName);
+
+    await ref.putFile(completionImage!);
+
+    // 2️⃣ Get image URL
+    final imageUrl = await ref.getDownloadURL();
+
+    // 3️⃣ Update Firestore with image URL
     await FirebaseFirestore.instance
         .collection('reports')
         .doc(widget.reportId)
         .update({
       'status': 'completed',
       'completionNote': completionC.text.trim(),
-      'completionImageUrl': null, // keep as null for now
+      'completionImageUrl': imageUrl, // ✅ NOW NOT NULL
       'completedAt': Timestamp.now(),
     });
 
@@ -52,7 +69,33 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       );
       Navigator.pop(context);
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error: $e")),
+    );
+  } finally {
+    setState(() => submitting = false);
   }
+}
+
+      void _openFullImage(BuildContext context, String imageUrl) {
+        showDialog(
+          context: context,
+          builder: (_) => Dialog(
+            backgroundColor: Colors.black,
+            insetPadding: const EdgeInsets.all(12),
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: InteractiveViewer(
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        );
+      }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +126,44 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
                 Text("Location Note: ${data['locationNote']}"),
                 const SizedBox(height: 12),
+
+                // ===== ORIGINAL REPORT IMAGE =====
+                        if (data['imageUrl'] != null)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: GestureDetector(
+                              onTap: () => _openFullImage(context, data['imageUrl']),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(14),
+                                child: Image.network(
+                                  data['imageUrl'],
+                                  height: 180,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (context, child, progress) {
+                                    if (progress == null) return child;
+                                    return SizedBox(
+                                      height: 180,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          value: progress.expectedTotalBytes != null
+                                              ? progress.cumulativeBytesLoaded /
+                                                  progress.expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (_, __, ___) => Container(
+                                    height: 180,
+                                    alignment: Alignment.center,
+                                    child: const Text("Unable to load image"),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
 
                 SizedBox(
                   height: 200,

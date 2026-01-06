@@ -243,6 +243,48 @@ class _ReportHistoryPageState extends State<ReportHistoryPage> {
                               ],
                             ),
 
+                           // ===== COMPLETION IMAGE =====
+                            if (data['completionImageUrl'] != null)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: GestureDetector(
+                                  onTap: () => _showFullImage(
+                                    context,
+                                    data['completionImageUrl'],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      data['completionImageUrl'],
+                                      height: 180,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      loadingBuilder: (context, child, progress) {
+                                        if (progress == null) return child;
+                                        return SizedBox(
+                                          height: 180,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              value: progress.expectedTotalBytes != null
+                                                  ? progress.cumulativeBytesLoaded /
+                                                      progress.expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      errorBuilder: (_, __, ___) => Container(
+                                        height: 180,
+                                        alignment: Alignment.center,
+                                        child: const Text("Unable to load image"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+
+
                             // COMPLETED TIME
                             Padding(
                               padding: const EdgeInsets.only(top: 12),
@@ -282,4 +324,35 @@ class _ReportHistoryPageState extends State<ReportHistoryPage> {
         '${date.hour.toString().padLeft(2, '0')}:'
         '${date.minute.toString().padLeft(2, '0')}';
   }
+
+      void _showFullImage(BuildContext context, String imageUrl) {
+        showDialog(
+          context: context,
+          builder: (_) => Dialog(
+            backgroundColor: Colors.black,
+            insetPadding: EdgeInsets.zero,
+            child: Stack(
+              children: [
+                Center(
+                  child: InteractiveViewer(
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 40,
+                  right: 20,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
 }
+

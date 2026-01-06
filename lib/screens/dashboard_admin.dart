@@ -787,7 +787,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
   }
 
   void _showRoleDialog(String userId, Map<String, dynamic> data) {
-    String current = data['role'] ?? "citizen";
+    String current = data['role'] ?? "user";
     showDialog(
       context: context,
       builder: (context) {
@@ -901,7 +901,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
                       child: ListTile(
                         leading: CircleAvatar(backgroundColor: Colors.green.shade100, child: const Icon(Icons.person, color: Colors.green)),
                         title: Text(data['email'] ?? "No email"),
-                        subtitle: Text("Role: ${data['role'] ?? 'citizen'}"),
+                        subtitle: Text("Role: ${data['role'] ?? 'user'}"),
                         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                           if (banned)
                             const Padding(
@@ -1088,7 +1088,7 @@ class _ReportsManagementScreenState extends State<ReportsManagementScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(
-                          "Citizen: ${data["citizenName"] ?? "Unknown"}",
+                          "User: ${data["citizenName"] ?? "Unknown"}",
                         ),
                         trailing: PopupMenuButton<String>(
                           onSelected: (v) async {
