@@ -796,7 +796,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
           title: const Text("Change Role"),
           content: StatefulBuilder(builder: (context, setState) {
             return Column(mainAxisSize: MainAxisSize.min, children: [
-              RadioListTile<String>(value: "citizen", groupValue: selected, title: const Text("Citizen"), onChanged: (v) => setState(() => selected = v!)),
+              RadioListTile<String>(value: "citizen", groupValue: selected, title: const Text("User"), onChanged: (v) => setState(() => selected = v!)),
               RadioListTile<String>(value: "volunteer", groupValue: selected, title: const Text("Volunteer"), onChanged: (v) => setState(() => selected = v!)),
               RadioListTile<String>(value: "admin", groupValue: selected, title: const Text("Admin"), onChanged: (v) => setState(() => selected = v!)),
             ]);
@@ -850,7 +850,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
           value: roleFilter,
           items: const [
             DropdownMenuItem(value: "all", child: Text("All")),
-            DropdownMenuItem(value: "citizen", child: Text("Citizen")),
+            DropdownMenuItem(value: "citizen", child: Text("User")),
             DropdownMenuItem(value: "volunteer", child: Text("Volunteer")),
             DropdownMenuItem(value: "admin", child: Text("Admin")),
           ],
@@ -1208,7 +1208,7 @@ class ReportDetailsDialog extends StatelessWidget {
 
             _detail("Category", data["category"]),
             _detail("Status", data["status"]),
-            _detail("Citizen", data["citizenName"]),
+            _detail("User", data["citizenName"]),
             _detail("Volunteer", data["volunteerName"]),
             _detail("Location Note", data["locationNote"]),
             _detail("Time", data["time"]),

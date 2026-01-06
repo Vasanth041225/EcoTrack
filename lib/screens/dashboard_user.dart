@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../citizen_module/submit_report.dart';
-import '../citizen_module/track_report_status.dart';
-import '../citizen_module/report_history.dart';
-import '../citizen_module/feedback_page.dart';
+import '../user_module/submit_report.dart';
+import '../user_module/track_report_status.dart';
+import '../user_module/report_history.dart';
+import '../user_module/feedback_page.dart';
 
 class CitizenDashboard extends StatelessWidget {
   const CitizenDashboard({super.key});
@@ -15,7 +15,7 @@ class CitizenDashboard extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("Citizen Dashboard"),
+        title: const Text("User Dashboard"),
         elevation: 0,
         centerTitle: true,
       ),

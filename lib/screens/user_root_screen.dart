@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vas_flutter/screens/chat_screen.dart';
-import 'dashboard_citizen.dart';
+import 'dashboard_user.dart';
 import 'settings.dart';
 
 

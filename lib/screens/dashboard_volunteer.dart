@@ -75,7 +75,7 @@ class VolunteerDashboard extends StatelessWidget {
             _ActionCard(
               icon: Icons.feedback_outlined,
               label: "Volunteer Feedback",
-              subtitle: "See what citizens say about your work",
+              subtitle: "See what users say about your work",
               gradient: LinearGradient(
                 colors: [Colors.purple.shade400, Colors.purple.shade700],
               ),

@@ -6,7 +6,7 @@ import 'firebase_options.dart';
 import 'screens/login.dart';
 import 'providers/chat_provider.dart';
 import 'themes/theme_provider.dart';
-import 'screens/citizen_root_screen.dart';
+import 'screens/user_root_screen.dart';
 import 'screens/volunteer_root_screen.dart';
 
 

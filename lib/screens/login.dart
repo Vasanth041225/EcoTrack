@@ -4,7 +4,7 @@ import '../services/auth_service.dart';
 import '../models/user_model.dart';
 import 'dashboard_admin.dart';
 import 'register.dart';
-import 'citizen_root_screen.dart';
+import 'user_root_screen.dart';
 import 'volunteer_root_screen.dart';
 //import 'login.dart';
 class LoginScreen extends StatefulWidget {

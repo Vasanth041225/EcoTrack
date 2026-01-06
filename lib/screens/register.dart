@@ -209,7 +209,7 @@ bool isStrongPassword(String password) {
                         ),
                         items: const [
                           DropdownMenuItem(
-                              value: "citizen", child: Text("Citizen")),
+                              value: "citizen", child: Text("User")),
                           DropdownMenuItem(
                               value: "volunteer", child: Text("Volunteer")),
                          // DropdownMenuItem(value: "admin", child: Text("Admin")),
