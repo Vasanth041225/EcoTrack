@@ -1,10 +1,16 @@
-# EcoTrack
+# 🌱 EcoTrack – Community-Driven Cleanliness Reporting System
 
-A new Flutter project.
 
-## Getting Started
+### EcoTrack is a mobile-based environmental reporting application designed to improve urban cleanliness and waste management through community participation and volunteer coordination. The platform enables users to report cleanliness issues such as garbage overflow, illegal dumping, road damage, and drainage problems by submitting photos, locations, and descriptions in real time. 
+### The system provides transparent tracking of report statuses, from submission to completion, allowing users to monitor progress and stay informed. Volunteers can view assigned tasks, upload completion proof images, and update task statuses, ensuring accountability and efficient resolution of reported issues. A built-in feedback mechanism allows users to rate and review completed tasks, promoting service quality and continuous improvement. 
+### EcoTrack is developed with a focus on usability, transparency, and collaboration, aligning with Malaysia MADANI principles and Sustainable Development Goal (SDG) 11: Sustainable Cities and Communities. By integrating real-time updates, image-based evidence, and role-based access (Admin, User, Volunteer), EcoTrack aims to foster environmental awareness and active community involvement in maintaining cleaner urban environments.
 
-##### EcoTrack is a Flutter-based environmental reporting application that allows citizens to report cleanliness issues, volunteers to manage assigned tasks, and administrators to monitor reports, users, and system insights using Firebase.
+## 🔧 Tech Stack
+
+### Frontend: Flutter
+### Backend: Firebase (Authentication, Firestore, Storage)
+### Features: Image upload, location tagging, report tracking, role-based dashboards, feedback system
+
 
 
 <img width="250" height="400" alt="image" src="https://github.com/user-attachments/assets/b2e9bc55-681a-4919-bafe-aa083f06d9e8" />
